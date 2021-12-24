@@ -1,24 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
 import { Header } from "./components";
-import { Home, Cart } from "./pages";
-import {Route, Routes, Router} from "react-router-dom";
+import { Cart, Home } from "./pages";
+import axios from "axios";
+
 
 function App() {
+  const [pizzas, setPizzas] = useState([]);
+
+  useEffect(() => {
+    axios("http://localhost:3000/db.json")
+      .then(({data}) => setPizzas(data.pizzas));
+  }, []);
+
   return (
-    <Router>
     <div className="wrapper">
       <Header />
-      <div className="content">
-         
-        <Routes>
-       <Route path="/" element={<Home />}/> 
-       </Routes>
-      
-        <Home/>
-
-      </div>
+      <Routes>
+        <Route path="/" element={<Home items={pizzas} />} exact />
+        <Route path="/cart" element={<Cart />} exact />
+      </Routes>
     </div>
-    </Router>
   );
 }
 

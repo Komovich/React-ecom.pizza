@@ -1,9 +1,10 @@
-import React, {useState, useEffect, createRef} from "react";
+import React, {useState, useEffect, useRef} from "react";
 
 function SortPopup({items}) {
     const [visiblePopup, setVisiblePopup] = useState(false);
     const [activeItem, setActiveItem] = useState(0);
-    const sortRef = React.createRef();
+    const sortRef = useRef(null);
+    const itemTitle = items[activeItem].name;
 
     const toggleVisiblePopup = () => {
         setVisiblePopup(!visiblePopup);
@@ -11,6 +12,7 @@ function SortPopup({items}) {
 
     const toggleDown = (index) => {
         setActiveItem(index)
+        setVisiblePopup(false);
     }
 
     const hendleClick = (e) => {
@@ -41,12 +43,12 @@ function SortPopup({items}) {
                       />
                     </svg>
                     <b>Сортировка по:</b>
-                    <span onClick={toggleVisiblePopup}>популярности</span>
+                    <span onClick={toggleVisiblePopup}>{itemTitle}</span>
                   </div>
                   {visiblePopup && (
                   <div className="sort__popup">
                     <ul>
-                        {items.map((item, index) => (<li ClassName={activeItem === index ? 'active' : ''} onClick={() => (toggleDown(index))} key={`${index}_${item}`}>{item}</li>))}
+                        {items.map((obj, index) => (<li ClassName={activeItem === index ? 'active' : ''} onClick={() => toggleDown(index)} key={`${index}_${obj.type}`}>{obj.name}</li>))}
                     </ul>
                   </div>
                   )}
