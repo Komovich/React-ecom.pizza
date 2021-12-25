@@ -7,4 +7,5 @@ const rootReducer = combineReducers({
     pizzas: pizzasReducer,
 })
 
+
 export default rootReducer;

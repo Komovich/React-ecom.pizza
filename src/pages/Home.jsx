@@ -1,18 +1,11 @@
 import React from "react";
 import { Categories, SortPopup, PizzaBlock } from "../components";
 import {useSelector} from "react-redux"
-import {setPizzas} from "../redux/actions/pizzas";
 import { useDispatch } from "react-redux";
-import axios from "axios";
+import { setCategory } from "../redux/actions/filters";
 
 function Home() {
   const dispatch = useDispatch();
-  
-  React.useEffect(() => {
-    axios("http://localhost:3000/db.json").then(({ data }) => {
-      dispatch(setPizzas(data.pizzas));
-    });
-  }, []);
 
 const {items} = useSelector(({pizzas}) => {
 return {
@@ -24,6 +17,7 @@ return {
     <div className="container">
       <div className="content__top">
         <Categories
+          onClickItem={(index) => dispatch(setCategory(index))}
           items={["Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]}
         />
         <SortPopup
