@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-function Categories({ items, onClickItem }) {
+const Categories = React.memo(function Categories({ items, onClickItem }) {
     const [activeItem, setActiveItem] = useState(null)
 
     const funActual = (index) => {
@@ -8,6 +8,7 @@ function Categories({ items, onClickItem }) {
         setActiveItem(index);
     };
 
+    console.log("ffffffff");
 
     console.log(12);
   return (
@@ -22,6 +23,6 @@ function Categories({ items, onClickItem }) {
       </div>
     </div>
   );
-}
+})
 
 export default Categories;
