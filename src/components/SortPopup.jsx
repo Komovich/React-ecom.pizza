@@ -1,17 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 
-const SortPopup = React.memo(function SortPopup({ items }) {
-  const [visiblePopup, setVisiblePopup] = useState(false);
-  const [activeItem, setActiveItem] = useState(0);
-  const sortRef = useRef(null);
-  const itemTitle = items[activeItem].name;
+const SortPopup = React.memo(function SortPopup({
+  items,
+  onClickSortType,
+  activeSortType,
+}) {
+  const [visiblePopup, setVisiblePopup] = React.useState(false);
+  const sortRef = React.useRef(null);
+  const itemTitle = items.find((obj) => obj.type === activeSortType).name;
 
   const toggleVisiblePopup = () => {
     setVisiblePopup(!visiblePopup);
   };
 
-  const toggleDown = (index) => {
-    setActiveItem(index);
+  const toggleDown = (type) => {
+    onClickSortType(type);
     setVisiblePopup(false);
   };
 
@@ -21,7 +25,7 @@ const SortPopup = React.memo(function SortPopup({ items }) {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     document.body.addEventListener("click", hendleClick);
   }, []);
 
@@ -49,9 +53,9 @@ const SortPopup = React.memo(function SortPopup({ items }) {
             <ul>
               {items.map((obj, index) => (
                 <li
-                  ClassName={activeItem === index ? "active" : ""}
-                  onClick={() => toggleDown(index)}
-                  key={`${index}_${obj.type}`}
+                  ClassName={activeSortType === obj.type ? "active" : ""}
+                  onClick={() => toggleDown(obj.type)}
+                  key={`${obj.type}_${index}`}
                 >
                   {obj.name}
                 </li>
@@ -63,5 +67,15 @@ const SortPopup = React.memo(function SortPopup({ items }) {
     </div>
   );
 });
+
+SortPopup.propTypes = {
+  activeSortType: PropTypes.string.isRequired,
+  onClickSortType: PropTypes.func.isRequired,
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+SortPopup.defaultProps = {
+  items: [],
+};
 
 export default SortPopup;
