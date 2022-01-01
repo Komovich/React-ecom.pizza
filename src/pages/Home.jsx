@@ -18,17 +18,13 @@ const categoryMames = [
   "Закрытые",
 ];
 const sortItems = [
-  { name: "популярности", type: "popular" },
-  { name: "цене", type: "price" },
-  { name: "алфавиту", type: "alphabet" },
+  { name: "популярности", type: "popular", order: "desc"},
+  { name: "цене", type: "price", order: "desc" },
+  { name: "алфавиту", type: "alphabet", order: "asc" },
 ];
 
 function Home() {
   const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    dispatch(fetchPizzas());
-  }, []);
 
   const { items } = useSelector(({ pizzas }) => {
     return {
@@ -53,21 +49,27 @@ function Home() {
     dispatch(setCategory(index));
   });
 
-  const onSelectSortBy = React.useCallback((type) => {
-    dispatch(setSortBy(type));
+  const onSelectSortBy = React.useCallback((obj) => {
+    dispatch(setSortBy(obj));
   });
+
+  React.useEffect(() => {
+    dispatch(fetchPizzas(category, sortBy));
+  }, [category, sortBy]);
+
+  
 
   return (
     <div className="container">
       <div className="content__top">
         <Categories
           activeCategory={category}
-          onClickSortType={onSelectCategory}
+          onClickCategory={onSelectCategory}
           items={categoryMames}
         />
         <SortPopup
           onClickSortType={onSelectSortBy}
-          activeSortType={sortBy}
+          activeSortType={sortBy.type}
           items={sortItems}
         />
       </div>

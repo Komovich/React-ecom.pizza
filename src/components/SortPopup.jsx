@@ -14,8 +14,8 @@ const SortPopup = React.memo(function SortPopup({
     setVisiblePopup(!visiblePopup);
   };
 
-  const toggleDown = (type) => {
-    onClickSortType(type);
+  const toggleDown = (obj) => {
+    onClickSortType(obj);
     setVisiblePopup(false);
   };
 
@@ -54,7 +54,7 @@ const SortPopup = React.memo(function SortPopup({
               {items.map((obj, index) => (
                 <li
                   ClassName={activeSortType === obj.type ? "active" : ""}
-                  onClick={() => toggleDown(obj.type)}
+                  onClick={() => toggleDown(obj)}
                   key={`${obj.type}_${index}`}
                 >
                   {obj.name}
