@@ -1,7 +1,12 @@
 import React from "react";
-import logoSvg from "../assets/img/pizza-logo.svg"
+import logoSvg from "../assets/img/pizza-logo.svg";
+import {useSelector} from 'react-redux';
 
 const Header = () => {
+  const {totalPrice, totalCount} = useSelector(({cart}) => ({
+    totalPrice: cart.totalPrice,
+    totalCount: cart.totalCount
+  }));
     return(
         <div className="header">
         <div className="container">
@@ -45,7 +50,7 @@ const Header = () => {
                   strokeLinejoin="round"
                 />
               </svg>
-              <span>3</span>
+            <span>{totalCount}</span>
             </a>
           </div>
         </div>
