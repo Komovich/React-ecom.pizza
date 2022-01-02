@@ -77,7 +77,7 @@ function Home() {
       <div className="content__items">
         {isLoading
           ? items.map((obj) => (
-              <PizzaBlock key={obj.id} isLoading={true} {...obj} />
+              <PizzaBlock onClickAddPizza={() => alert(111)} key={obj.id} isLoading={true} {...obj} />
             ))
           : Array(12)
               .fill(0)
