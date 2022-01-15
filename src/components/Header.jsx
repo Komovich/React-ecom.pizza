@@ -1,25 +1,27 @@
 import React from "react";
 import logoSvg from "../assets/img/pizza-logo.svg";
 import {useSelector} from 'react-redux';
+import {Link} from 'react-router-dom';
 
 const Header = () => {
   const {totalPrice, totalCount} = useSelector(({cart}) => ({
     totalPrice: cart.totalPrice,
     totalCount: cart.totalCount
-  }));
+  })); // берём данные из редакса для отображения кол-ва и суммы выбранных пицц в кнопке хедера
+
     return(
         <div className="header">
         <div className="container">
-          <div className="header__logo">
-            <img width="38" src={logoSvg} alt="Pizza logo" />
+        <div className="header__logo">
+        <Link to="/"><img width="38" src={logoSvg} alt="Pizza logo" /></Link>
             <div>
               <h1>React Pizza</h1>
               <p>самая вкусная пицца во вселенной</p>
             </div>
           </div>
           <div className="header__cart">
-            <a href="/cart.html" className="button button--cart">
-              <span>520 ₽</span>
+            <Link to="/cart"><a href="/cart.html" className="button button--cart">
+              <span>{totalPrice} ₽</span>
               <div className="button__delimiter"></div>
               <svg
                 width="18"
@@ -51,7 +53,7 @@ const Header = () => {
                 />
               </svg>
             <span>{totalCount}</span>
-            </a>
+            </a></Link>
           </div>
         </div>
       </div>

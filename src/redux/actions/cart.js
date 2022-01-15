@@ -1,9 +1,9 @@
-// export const setSortBy = () => ({
-//     type: "SET_TOTAL_PRICE",
-//     payload: 
-// });
+export const addPizzatoCart = (pizzasObj) => ({
+    type: "ADD_PIZZA_CART",
+    payload: pizzasObj
+});
 
-// export const setCategory = () => ({
-//     type: "SET_TOTAL_COUNT",
-//     payload: 
-// });
+export const clearCart = () => ({
+    type: "CLEAR_CART"
+});
+

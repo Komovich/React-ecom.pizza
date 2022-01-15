@@ -45,6 +45,13 @@ function Home() {
     };
   });
 
+  const { cartItems } = useSelector(({ cart }) => {
+    return {
+      cartItems: cart.items,
+    };
+  });
+ 
+
   const onSelectCategory = React.useCallback((index) => {
     dispatch(setCategory(index));
   });
@@ -57,6 +64,12 @@ function Home() {
     dispatch(fetchPizzas(category, sortBy));
   }, [category, sortBy]);
 
+  const handleAddPizzaToCart = (obj) => {
+    dispatch({
+      type: "ADD_PIZZA_CART",
+      payload: obj
+    })
+  }
   
 
   return (
@@ -77,8 +90,9 @@ function Home() {
       <div className="content__items">
         {isLoading
           ? items.map((obj) => (
-              <PizzaBlock onClickAddPizza={() => alert(111)} key={obj.id} isLoading={true} {...obj} />
+              <PizzaBlock onClickAddPizza={handleAddPizzaToCart} key={obj.id} addedCount={cartItems[obj.id] && cartItems[obj.id].items.length} {...obj} />
             ))
+            
           : Array(12)
               .fill(0)
               .map((_, index) => <PizzaLoadingBlock key={index} />)}
