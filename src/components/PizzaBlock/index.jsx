@@ -1,31 +1,22 @@
-import React, { useState } from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import Button from "../Button";
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import Button from '../Button';
 
-function PizzaBlock({
-  id,
-  imageUrl,
-  name,
-  price,
-  types,
-  sizes,
-  onClickAddPizza,
-  addedCount,
-}) {
-  const avilableTypes = ["Тонкое", "Традиционное"]; //для перебора и отображения
-  const avilableSizes = [26, 30, 40]; //для перебора и отображения
+function PizzaBlock({ id, name, imageUrl, price, types, sizes, onClickAddPizza, addedCount }) {
+  const availableTypes = ['тонкое', 'традиционное'];
+  const availableSizes = [26, 30, 40];
 
-  const [activeType, setActiveType] = useState(types[0]); //для сравнения с index и применения className
-  const [activeSize, setActiveSize] = useState(sizes[0]); //для сравнения с index и применения className
+  const [activeType, setActiveType] = React.useState(types[0]);
+  const [activeSize, setActiveSize] = React.useState(0);
 
-  const onSelectTypes = (index) => {
+  const onSelectType = (index) => {
     setActiveType(index);
-  }; //для присваивания нового значения в activeSize
+  };
 
   const onSelectSize = (index) => {
     setActiveSize(index);
-  }; //для присваивания нового значения в activeSize
+  };
 
   const onAddPizza = () => {
     const obj = {
@@ -33,11 +24,11 @@ function PizzaBlock({
       name,
       imageUrl,
       price,
-      type: avilableTypes[activeType],
-      size: avilableSizes[activeSize],
+      size: availableSizes[activeSize],
+      type: availableTypes[activeType],
     };
     onClickAddPizza(obj);
-  }; //для передачи данных в Redux
+  };
 
   return (
     <div className="pizza-block">
@@ -45,30 +36,28 @@ function PizzaBlock({
       <h4 className="pizza-block__title">{name}</h4>
       <div className="pizza-block__selector">
         <ul>
-          {avilableTypes.map((type, index) => (
+          {availableTypes.map((type, index) => (
             <li
-              onClick={() => onSelectTypes(index)}
               key={type}
+              onClick={() => onSelectType(index)}
               className={classNames({
                 active: activeType === index,
-                disabled: !types.includes(type), //если не активный тип то убрать актив статус
-              })}
-            >
+                disabled: !types.includes(index),
+              })}>
               {type}
             </li>
           ))}
         </ul>
         <ul>
-          {avilableSizes.map((size, index) => (
+          {availableSizes.map((size, index) => (
             <li
-              onClick={() => onSelectSize(index)}
               key={size}
+              onClick={() => onSelectSize(index)}
               className={classNames({
                 active: activeSize === index,
                 disabled: !sizes.includes(size),
-              })}
-            >
-              {size}см.
+              })}>
+              {size} см.
             </li>
           ))}
         </ul>
@@ -81,8 +70,7 @@ function PizzaBlock({
             height="12"
             viewBox="0 0 12 12"
             fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+            xmlns="http://www.w3.org/2000/svg">
             <path
               d="M10.8 4.8H7.2V1.2C7.2 0.5373 6.6627 0 6 0C5.3373 0 4.8 0.5373 4.8 1.2V4.8H1.2C0.5373 4.8 0 5.3373 0 6C0 6.6627 0.5373 7.2 1.2 7.2H4.8V10.8C4.8 11.4627 5.3373 12 6 12C6.6627 12 7.2 11.4627 7.2 10.8V7.2H10.8C11.4627 7.2 12 6.6627 12 6C12 5.3373 11.4627 4.8 10.8 4.8Z"
               fill="white"
@@ -97,16 +85,17 @@ function PizzaBlock({
 }
 
 PizzaBlock.propTypes = {
-  imageUrl: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  types: PropTypes.arrayOf(PropTypes.number).isRequired,
-  sizes: PropTypes.arrayOf(PropTypes.number).isRequired,
+  name: PropTypes.string,
+  imageUrl: PropTypes.string,
+  price: PropTypes.number,
+  types: PropTypes.arrayOf(PropTypes.number),
+  sizes: PropTypes.arrayOf(PropTypes.number),
+  onClickAddPizza: PropTypes.func,
   addedCount: PropTypes.number,
 };
 
 PizzaBlock.defaultProps = {
-  name: "---",
+  name: '---',
   price: 0,
   types: [],
   sizes: [],
