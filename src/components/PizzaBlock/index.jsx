@@ -12,11 +12,11 @@ function PizzaBlock({ id, name, imageUrl, price, types, sizes, onClickAddPizza, 
 
   const onSelectType = (index) => {
     setActiveType(index);
-  };
+  }; // Устанавливает значение activeType в useState
 
   const onSelectSize = (index) => {
     setActiveSize(index);
-  };
+  }; // Устанавливает значение activeSize в useState
 
   const onAddPizza = () => {
     const obj = {
@@ -24,10 +24,10 @@ function PizzaBlock({ id, name, imageUrl, price, types, sizes, onClickAddPizza, 
       name,
       imageUrl,
       price,
-      size: availableSizes[activeSize],
-      type: availableTypes[activeType],
+      size: availableSizes[activeSize], //производим сравнение из массива по индексу
+      type: availableTypes[activeType], //производим сравнение из массива по индексу
     };
-    onClickAddPizza(obj);
+    onClickAddPizza(obj); // передаём сформированный объект через disaptch в redux
   };
 
   return (

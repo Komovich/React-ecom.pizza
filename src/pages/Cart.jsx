@@ -8,39 +8,39 @@ import { clearCart, removeCartItem, plusCartItem, minusCartItem } from '../redux
 
 function Cart() {
   const dispatch = useDispatch();
-  const { totalPrice, totalCount, items } = useSelector(({ cart }) => cart);
+  const { totalPrice, totalCount, items } = useSelector(({ cart }) => cart); // state из redux
 
   const addedPizzas = Object.keys(items).map((key) => {
     return items[key].items[0];
-  });
+  }); // Делаем массив ключей, перебираем их. Теперь по очередь по кадому key обращаемся внутри items. ОБщарещение идёт к самому внутреннему объекту. 
 
   const onClearCart = () => {
     if (window.confirm('Вы действительно хотите очистить корзину?')) {
       dispatch(clearCart());
     }
-  };
+  };  // При нажатии на очистку корзины срабатывает confirm
 
   const onRemoveItem = (id) => {
     if (window.confirm('Вы действительно хотите удалить?')) {
       dispatch(removeCartItem(id));
     }
-  };
+  }; // При нажатии на очистку корзины срабатывает confirm
 
   const onPlusItem = (id) => {
     dispatch(plusCartItem(id));
-  };
+  }; // dispatch при нажатии на +
 
   const onMinusItem = (id) => {
     dispatch(minusCartItem(id));
-  };
+  }; // dispatch при нажатии на -
 
   const onClickOrder = () => {
     console.log('ВАШ ЗАКАЗ', items);
-  };
+  };  // console.log при нажатии на оплатить сейчас
 
   return (
     <div className="container container--cart">
-      {totalCount ? (
+      {totalCount ? ( // если в корзине что-то есть то отображаем эту чать кода, ниже есть вторая часть кода, её отображаем если в корзине ничего нет.
         <div className="cart">
           <div className="cart__top">
             <h2 className="content__title">
@@ -110,30 +110,30 @@ function Cart() {
                   strokeLinejoin="round"
                 />
               </svg>
-
-              <span onClick={onClearCart}>Очистить корзину</span>
-            </div>
+                      
+              <span onClick={onClearCart}>Очистить корзину</span> 
+            </div> 
           </div>
           <div className="content__items">
             {addedPizzas.map((obj) => (
               <CartItem
-                key={obj.id}
-                id={obj.id}
-                name={obj.name}
+                key={obj.id}  
+                id={obj.id}   
+                name={obj.name} 
                 type={obj.type}
                 size={obj.size}
-                totalPrice={items[obj.id].totalPrice}
-                totalCount={items[obj.id].items.length}
-                onRemove={onRemoveItem}
+                totalPrice={items[obj.id].totalPrice} // totalPrice(общая стоимость) будем брать прямо здеcь по определённому id
+                totalCount={items[obj.id].items.length} // totalCount(кол-во выбранных пицц) будем брать прямо здеcь по определённому id
+                onRemove={onRemoveItem} 
                 onMinus={onMinusItem}
-                onPlus={onPlusItem}
+                onPlus={onPlusItem} 
               />
             ))}
           </div>
           <div className="cart__bottom">
             <div className="cart__bottom-details">
-              <span>
-                Всего пицц: <b>{totalCount} шт.</b>
+              <span> 
+                Всего пицц: <b>{totalCount} шт.</b> 
               </span>
               <span>
                 Сумма заказа: <b>{totalPrice} ₽</b>
@@ -157,7 +157,7 @@ function Cart() {
                 </svg>
                 <Link to="/">
                   <span>Вернуться назад</span>
-                </Link>
+                </Link> 
               </a>
               <Button onClick={onClickOrder} className="pay-btn">
                 <span>Оплатить сейчас</span>
@@ -165,7 +165,7 @@ function Cart() {
             </div>
           </div>
         </div>
-      ) : (
+      ) : ( 
         <div className="cart cart--empty">
           <h2>
             Корзина пустая <i>😕</i>
@@ -180,7 +180,7 @@ function Cart() {
             <span>Вернуться назад</span>
           </Link>
         </div>
-      )}
+      )} 
     </div>
   );
 }

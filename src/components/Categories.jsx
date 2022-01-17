@@ -6,17 +6,17 @@ const Categories = React.memo(function Categories({ activeCategory, items, onCli
     <div className="categories">
       <ul>
         <li
-          className={activeCategory === null ? 'active' : ''}
-          onClick={() => onClickCategory(null)}>
+          className={activeCategory === null ? 'active' : ''} // Сравниваем индексы в redux с перебором, если совпадаем присваиваем active, здесь он по умолчанию null
+          onClick={() => onClickCategory(null)}>  
           Все
-        </li>
+        </li> 
         {items &&
           items.map((name, index) => (
             <li
-              className={activeCategory === index ? 'active' : ''}
-              onClick={() => onClickCategory(index)}
-              key={`${name}_${index}`}>
-              {name}
+              className={activeCategory === index ? 'active' : ''} // Сравниваем индексы в redux с перебором, если совпадаем присваиваем active
+              onClick={() => onClickCategory(index)} // при нажатии на категорию срабатывает dispatch индекса
+              key={`${name}_${index}`}> 
+              {name} 
             </li>
           ))}
       </ul>

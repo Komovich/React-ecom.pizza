@@ -5,14 +5,17 @@ export const setLoaded = (payload) => ({
   payload,
 });
 
+export const setPizzas = (items) => ({
+  type: 'SET_PIZZAS',
+  payload: items,
+});
+
 export const fetchPizzas = (sortBy, category) => (dispatch) => {
   dispatch({
     type: 'SET_LOADED',
     payload: false,
   });
-
-  axios
-    .get(
+  axios.get(
       `/pizzas?${category !== null ? `category=${category}` : ''}&_sort=${sortBy.type}&_order=${
         sortBy.order
       }`,
@@ -20,9 +23,4 @@ export const fetchPizzas = (sortBy, category) => (dispatch) => {
     .then(({ data }) => {
       dispatch(setPizzas(data));
     });
-};
-
-export const setPizzas = (items) => ({
-  type: 'SET_PIZZAS',
-  payload: items,
-});
+}; // параметры которые принимаем в fetchPizzas идут на API
